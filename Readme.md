@@ -17,6 +17,10 @@ $ sudo service docker start
 $ sudo curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 ```
 * [nvidia-docker2](https://github.com/NVIDIA/nvidia-docker/wiki/Installation-(version-2.0))
+```
+$ sudo apt-get install nvidia-docker2
+$ sudo pkill -SIGHUP dockerd
+```
 
 ## Запуск проекта
 * Клонировать данный репозиторий
