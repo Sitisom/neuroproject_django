@@ -1,5 +1,5 @@
 import torch
-#torch.cuda.current_device() #command for turning CUDA on
+torch.cuda.current_device() #command for turning CUDA on
 
 import os
 from os.path import join 

@@ -33,7 +33,7 @@ def esrgan_video(input_path):
 
 def _interpolate(input_path, output_path):
     model_path = model_directory + 'RRDB_ESRGAN_x4.pth'  # models/RRDB_ESRGAN_x4.pth OR models/RRDB_PSNR_x4.pth
-    device = torch.device('cpu') #paste in CPU or CUDA
+    device = torch.device('CUDA') #paste in CPU or CUDA
 
     model = arch.RRDBNet(3, 3, 64, 23, gc=32) #creating model for image processing
     model.load_state_dict(torch.load(model_path), strict=True)

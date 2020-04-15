@@ -139,4 +139,3 @@ cython_debug/
 
 results/
 models/
-static/
