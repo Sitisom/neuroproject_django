@@ -1,0 +1,44 @@
+{% extends './base.html' %}
+
+{% block content %}
+<main id="index">
+	<div class="container">
+		<div class="row">
+			<div class="mt-5 col text-center">
+				<h1>Видео обработка</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-4 mx-auto">
+			    <form class="mt-5" method="post" enctype="multipart/form-data">
+			    	{% csrf_token %}
+					<!--<div class="form-check pb-2">
+					  {{form.dain}}
+					  <label class="form-check-label">
+					    Добавить fps
+					  </label>
+					</div>-->
+					<div class="form-check pb-2">
+					  <input type="checkbox" name="deoldify">
+					  <label class="form-check-label">
+					    Окрасить
+					  </label>
+					</div>
+					<div class="form-check pb-2">
+					  <input type="checkbox" name="esrgan">
+					  <label class="form-check-label">
+					    Улучшить разрешение
+					  </label>
+					</div>
+			        <div class="form-group mt-3">
+					    <label for="FormControlFile"><b>Ваш файл</b></label>
+					    <input type="file" name="files" multiple>
+					 </div>
+			        <button id="send_mail" name="submit" type="submit" class="btn btn-success">Отправить</button>
+			        {{ form.answer }}
+			    </form>
+		    </div>
+	    </div>
+    </div> 
+</main>
+{% endblock content %}
