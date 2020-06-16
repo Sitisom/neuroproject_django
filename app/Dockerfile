@@ -35,5 +35,4 @@ COPY . /usr/src/app/
 #RUN CUDA_VISIBLE_DEVICES=0 /usr/src/app/dain/PWCNet/correlation_package_pytorch1_0/build.sh
 #COPY . /usr/src/app/
 
-# run entrypoint.sh
 ENTRYPOINT ["/usr/src/app/entrypoint.sh"]

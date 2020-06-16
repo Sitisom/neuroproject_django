@@ -20,12 +20,15 @@ bwframes_root = join(video_workfolder, "bwframes")
 audio_root = join(video_workfolder, "audio")
 build_root = join(video_workfolder, "buildframes")
 
+
 def randomString(stringLength=16):
     letters = string.ascii_lowercase + string.digits
     return ''.join(random.choice(letters) for i in range(stringLength))
 
+
 def get_name(source_path):
     return os.path.splitext(os.path.basename(source_path))[0]
+
 
 def extract_raw_images(source_path):
     bwframes_folder = join(bwframes_root, get_name(source_path))
@@ -36,28 +39,31 @@ def extract_raw_images(source_path):
             bwframe_path_template, format='image2', vcodec='mjpeg', qscale=0
         ).run(capture_stdout=True)
 
+
 def get_fps(source_path):
-        probe = ffmpeg.probe(str(source_path))
-        stream_data = next(
-            (stream for stream in probe['streams'] if stream['codec_type'] == 'video'),
-            None,
-        )
-        return stream_data['avg_frame_rate']
+    probe = ffmpeg.probe(str(source_path))
+    stream_data = next(
+        (stream for stream in probe['streams'] if stream['codec_type'] == 'video'),
+        None,
+    )
+    return stream_data['avg_frame_rate']
+
 
 def build_video(source_path):
-        colorized_path = join(result_folder, get_name(source_path) + '_build.mp4')
+    colorized_path = join(result_folder, get_name(source_path) + '_build.mp4')
 
-        fps = get_fps(source_path)
+    fps = get_fps(source_path)
 
-        build_folder = join(bwframes_root, get_name(source_path)) + '/'
-        bwframe_path_template = join(build_folder, '%5d.jpg')
+    build_folder = join(bwframes_root, get_name(source_path)) + '/'
+    bwframe_path_template = join(build_folder, '%5d.jpg')
 
-        ffmpeg.input(
-            str(bwframe_path_template),
-            format='image2',
-            vcodec='mjpeg',
-            framerate=fps,
-        ).output(str(colorized_path), crf=17, vcodec='libx264').run(capture_stdout=True)
+    ffmpeg.input(
+        str(bwframe_path_template),
+        format='image2',
+        vcodec='mjpeg',
+        framerate=fps,
+    ).output(str(colorized_path), crf=17, vcodec='libx264').run(capture_stdout=True)
+
 
 def compress_image(image, path_original):
     size = 1920, 1080
@@ -104,7 +110,7 @@ def convertToJPG(path_original):
     elif img.format == "PNG":
         try:
             image = Image.new("RGB", img.size, (255,255,255))
-            image.paste(img,img)
+            image.paste(img, img)
             compress_image(image, path_original)
         except ValueError:
             image = img.convert('RGB')
@@ -118,17 +124,15 @@ def convertToJPG(path_original):
         img.close()
 
 
-
 def blur(image, x0, x1, y0, y1, sigma=1, multichannel=True):
     y0, y1 = min(y0, y1), max(y0, y1)
     x0, x1 = min(x0, x1), max(x0, x1)
     im = image.copy()
-    sub_im = im[y0:y1,x0:x1].copy()
+    sub_im = im[y0:y1, x0:x1].copy()
     blur_sub_im = gaussian(sub_im, sigma=sigma, multichannel=multichannel)
     blur_sub_im = np.round(255 * blur_sub_im)
-    im[y0:y1,x0:x1] = blur_sub_im
+    im[y0:y1, x0:x1] = blur_sub_im
     return im
-
 
 
 def download(url, filename):
@@ -158,6 +162,7 @@ def clean_all(files):
 def create_directory(path):
     os.makedirs(os.path.dirname(path), exist_ok=True)
 
+
 def clean_directory(path):
     for filename in os.listdir(path):
         file_path = os.path.join(path, filename)
@@ -170,7 +175,6 @@ def clean_directory(path):
             print('Failed to delete %s. Reason: %s' % (file_path, e))
 
 
-
 def get_model_bin(url, output_path):
     if not os.path.exists(output_path):
         create_directory(output_path)
@@ -181,8 +185,7 @@ def get_model_bin(url, output_path):
     return output_path
 
 
-#model_list = [(url, output_path), (url, output_path)]
+# model_list = [(url, output_path), (url, output_path)]
 def get_multi_model_bin(model_list):
     for m in model_list:
         thread.start_new_thread(get_model_bin, m)
-

@@ -25,7 +25,7 @@ $ sudo pkill -SIGHUP dockerd
 ## Запуск проекта
 * Клонировать данный репозиторий
 ```
-$ git clone https://github.com/Sitisom/neuroproject_flask.git
+$ git clone https://github.com/Sitisom/neuroproject_django.git
 ```
 * В папке с проектом в терминале набрать:
 ```

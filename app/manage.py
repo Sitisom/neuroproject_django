@@ -5,6 +5,7 @@ import sys
 
 from app_utils import create_directory, get_model_bin
 
+
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'neuro.settings')
     try:
@@ -19,7 +20,7 @@ def main():
 
 
 if __name__ == '__main__':
-    #Creating required directories
+    # Creating required directories
     results_img_directory = '/usr/src/app/results/image/'
     create_directory(results_img_directory)
 
@@ -29,7 +30,7 @@ if __name__ == '__main__':
     model_directory = '/usr/src/app/models/'
     create_directory(model_directory)
 
-    #Downloading required models
+    # Downloading required models
     artistic_model_url = 'https://www.dropbox.com/s/zkehq1uwahhbc2o/ColorizeArtistic_gen.pth?dl=0'
     get_model_bin(artistic_model_url, os.path.join(model_directory, 'ColorizeArtistic_gen.pth'))
 
